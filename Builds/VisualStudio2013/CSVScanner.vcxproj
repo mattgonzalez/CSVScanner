@@ -130,6 +130,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\CSVScanner.cpp" />
     <ClCompile Include="..\..\Source\Main.cpp" />
     <ClCompile Include="\JUCE\modules\juce_core\text\juce_CharacterFunctions.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -952,6 +953,7 @@
     <ClCompile Include="..\..\..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\CSVScanner.h" />
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharacterFunctions.h" />
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharPointer_ASCII.h" />
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharPointer_UTF8.h" />

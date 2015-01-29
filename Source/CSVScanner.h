@@ -11,6 +11,7 @@ public:
 
 protected:
 	File csvFile;
+	File logFile;
 	Result result;
 
 	void parseLine(String const &line, StringArray &tokens);

@@ -9,6 +9,12 @@ maxCallbackSeconds(0.0),
 ThreadWithProgressWindow("CSV Scanner",true,true)
 {
 	csvFile = File::getCurrentWorkingDirectory().getChildFile(filename);
+	logFile = File::getCurrentWorkingDirectory().getFullPathName() + "\\log.txt";
+
+	if (logFile.existsAsFile())
+	{
+		logFile.deleteFile();
+	}
 }
 
 Result CSVScanner::scan()
@@ -32,6 +38,7 @@ void CSVScanner::run()
 
 	String line;
 	StringArray tokens;
+
 	do
 	{
 		if (threadShouldExit())
@@ -41,12 +48,12 @@ void CSVScanner::run()
 		}
 
 		line = inputStream.readNextLine();
+
 		parseLine(line, tokens);
 
 		remaining -= line.getNumBytesAsUTF8();
 		int64 progress = bytes - remaining;
 		setProgress(double(progress) / bytes);
-
 	} while (line.isNotEmpty());
 }
 
@@ -56,6 +63,11 @@ String ASIOOutputReady("ASIO output ready");
 
 void CSVScanner::parseLine(String const &line, StringArray &tokens)
 {
+	if (false == logFile.existsAsFile())
+	{
+		logFile.create();
+	}
+
 	tokens.clearQuick();
 	tokens.addTokens(line, comma, String::empty);
 
@@ -84,6 +96,11 @@ void CSVScanner::handleASIOHostNotify(StringArray & tokens)
 
 	if (elapsedSeconds > maxElapsedHostNotifySeconds)
 	{
+		String logString("an ASIO Host Notify event has set a new maxElapsedHostNotifySeconds entry: " + String(elapsedSeconds) + " seconds. \n");
+		logString += "The previous maxElapsedHostNotifySeconds was: " + String(maxElapsedHostNotifySeconds) + " seconds. \n";
+		logString += "This happened on eventIndex: " + tokens[0] + ". \n\n";
+		logFile.appendText(logString);
+
 		maxElapsedHostNotifySeconds = elapsedSeconds;
 	}
 }
@@ -95,6 +112,14 @@ void CSVScanner::handleASIOOutputReady(StringArray & tokens)
 	if (hostNotifySeconds != 0.0)
 	{
 		callbackSeconds = seconds - hostNotifySeconds;
+	}
+
+	if (callbackSeconds > maxCallbackSeconds)
+	{
+		String logString("an ASIO Output Ready event has set a new maxCallbackSeconds entry: " + String(callbackSeconds) + " seconds. \n");
+		logString += "The previous maxCallbackSeconds was: " + String(maxCallbackSeconds) + " seconds. \n";
+		logString += "This happened on eventIndex: " + tokens[0] + ". \n\n";
+		logFile.appendText(logString);
 	}
 
 	maxCallbackSeconds = jmax(maxCallbackSeconds, callbackSeconds);
