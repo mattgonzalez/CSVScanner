@@ -13,6 +13,8 @@ protected:
 	File csvFile;
 	File logFile;
 	Result result;
+	FileInputStream csvInputStream;
+	MemoryBlock csvMemoryBlock;
 
 	void parseLine(String const &line, StringArray &tokens);
 	void handleASIOHostNotify(StringArray & tokens);
@@ -21,5 +23,10 @@ protected:
 	double hostNotifySeconds;
 	double maxElapsedHostNotifySeconds;
 	double maxCallbackSeconds;
+
+	enum 
+	{
+		MEGA_BYTE = 1024 * 1024
+	};
 };
 

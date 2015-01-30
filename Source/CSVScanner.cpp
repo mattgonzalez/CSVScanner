@@ -6,14 +6,23 @@ result(Result::ok()),
 hostNotifySeconds(0.0),
 maxElapsedHostNotifySeconds(0.0),
 maxCallbackSeconds(0.0),
+csvInputStream(File::getCurrentWorkingDirectory().getChildFile(filename)),
+csvMemoryBlock(),
 ThreadWithProgressWindow("CSV Scanner",true,true)
 {
 	csvFile = File::getCurrentWorkingDirectory().getChildFile(filename);
 	logFile = File::getCurrentWorkingDirectory().getFullPathName() + "\\log.txt";
 
+	if (false == csvInputStream.openedOk())
+	{
+		AlertWindow::showMessageBox(AlertWindow::WarningIcon, "CSVScanner", "Could not open the specified CSV file, quitting!", "OK");
+		return;
+	}
+	
 	if (logFile.existsAsFile())
 	{
 		logFile.deleteFile();
+		logFile.create();
 	}
 }
 
@@ -34,27 +43,33 @@ void CSVScanner::run()
 {
 	int64 bytes = csvFile.getSize();
 	int64 remaining = bytes;
-	FileInputStream inputStream(csvFile);
-
+	
 	String line;
 	StringArray tokens;
 
-	do
+	while (false == csvInputStream.isExhausted())
 	{
-		if (threadShouldExit())
+		csvMemoryBlock.reset();
+		csvInputStream.readIntoMemoryBlock(csvMemoryBlock, MEGA_BYTE);
+		MemoryInputStream inputStream(csvMemoryBlock, false);
+	
+		while (false == inputStream.isExhausted())
 		{
-			result = Result::fail("User canceled");
-			return;
+			if (threadShouldExit())
+			{
+				result = Result::fail("User canceled");
+				return;
+			}
+
+			line = inputStream.readNextLine();
+
+			parseLine(line, tokens);
+
+			remaining -= line.getNumBytesAsUTF8();
+			int64 progress = bytes - remaining;
+			setProgress(double(progress) / bytes);
 		}
-
-		line = inputStream.readNextLine();
-
-		parseLine(line, tokens);
-
-		remaining -= line.getNumBytesAsUTF8();
-		int64 progress = bytes - remaining;
-		setProgress(double(progress) / bytes);
-	} while (line.isNotEmpty());
+	}
 }
 
 String const comma(",");
@@ -63,12 +78,8 @@ String ASIOOutputReady("ASIO output ready");
 
 void CSVScanner::parseLine(String const &line, StringArray &tokens)
 {
-	if (false == logFile.existsAsFile())
-	{
-		logFile.create();
-	}
-
 	tokens.clearQuick();
+
 	tokens.addTokens(line, comma, String::empty);
 
 	if (ASIOHostNotify == tokens[3])

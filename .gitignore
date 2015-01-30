@@ -68,6 +68,9 @@ Temporary Items
 *.tlog
 *.exe
 *.idb
+*.vsp
+*.psess
+*.xml
 !BinaryBuilder.exe
 !tusbaudioapi.dll
 !tusbaudioapi_x64.dll
