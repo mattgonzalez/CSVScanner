@@ -6,28 +6,29 @@ result(Result::ok()),
 hostNotifySeconds(0.0),
 maxElapsedHostNotifySeconds(0.0),
 maxCallbackSeconds(0.0),
+csvFile(File::getCurrentWorkingDirectory().getChildFile(filename)),
 csvInputStream(File::getCurrentWorkingDirectory().getChildFile(filename)),
 csvMemoryBlock(),
 ThreadWithProgressWindow("CSV Scanner",true,true)
 {
-	csvFile = File::getCurrentWorkingDirectory().getChildFile(filename);
+	
+}
+
+Result CSVScanner::scan()
+{
 	logFile = File::getCurrentWorkingDirectory().getFullPathName() + "\\log.txt";
 
 	if (false == csvInputStream.openedOk())
 	{
-		AlertWindow::showMessageBox(AlertWindow::WarningIcon, "CSVScanner", "Could not open the specified CSV file, quitting!", "OK");
-		return;
+		return Result::fail("Could not open the specified CSV file, quitting!");
 	}
-	
+
 	if (logFile.existsAsFile())
 	{
 		logFile.deleteFile();
 		logFile.create();
 	}
-}
 
-Result CSVScanner::scan()
-{
 	if (false == csvFile.exists())
 		return Result::fail(csvFile.getFullPathName() + " does not exist");
 
@@ -80,7 +81,19 @@ void CSVScanner::parseLine(String const &line, StringArray &tokens)
 {
 	tokens.clearQuick();
 
-	tokens.addTokens(line, comma, String::empty);
+	//tokens.addTokens(line, comma, String::empty);
+	
+	int length = line.length();
+	int tokenStart = 0, tokenEnd = 0;
+	for (; tokenEnd < length; ++tokenEnd)
+	{
+		if (',' == line[tokenEnd])
+		{
+			tokens.add(line.substring(tokenStart, tokenEnd - 1));
+			tokenStart = tokenEnd + 1;
+		}
+	}
+	tokens.add(line.substring(tokenStart, tokenEnd - 1));
 
 	if (ASIOHostNotify == tokens[3])
 	{
