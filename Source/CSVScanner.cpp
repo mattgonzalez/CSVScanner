@@ -1,6 +1,11 @@
 #include "JuceHeader.h"
 #include "CSVScanner.h"
 
+const String CSVScanner::comma(",");
+const String CSVScanner::ASIOHostNotify("ASIO host notify");
+const String CSVScanner::ASIOOutputReady("ASIO output ready");
+const String CSVScanner::AVTPTransmit("AVTP transmit");
+
 CSVScanner::CSVScanner(String filename) :
 result(Result::ok()),
 hostNotifySeconds(0.0),
@@ -73,10 +78,6 @@ void CSVScanner::run()
 	}
 }
 
-String const comma(",");
-String ASIOHostNotify("ASIO host notify");
-String ASIOOutputReady("ASIO output ready");
-
 void CSVScanner::parseLine(String const &line, StringArray &tokens)
 {
 	tokens.clearQuick();
@@ -89,11 +90,13 @@ void CSVScanner::parseLine(String const &line, StringArray &tokens)
 	{
 		if (',' == line[tokenEnd])
 		{
-			tokens.add(line.substring(tokenStart, tokenEnd - 1));
+			String token(line.substring(tokenStart, tokenEnd));
+			//DBG(token);
+			tokens.add(token);
 			tokenStart = tokenEnd + 1;
 		}
 	}
-	tokens.add(line.substring(tokenStart, tokenEnd - 1));
+	tokens.add(line.substring(tokenStart, tokenEnd));
 
 	if (ASIOHostNotify == tokens[3])
 	{
@@ -104,6 +107,12 @@ void CSVScanner::parseLine(String const &line, StringArray &tokens)
 	if (ASIOOutputReady == tokens[3])
 	{
 		handleASIOOutputReady(tokens);
+		return;
+	}
+
+	if (AVTPTransmit == tokens[3])
+	{
+		//streamManager.handleAVTPTransmit(tokens, logFile);
 		return;
 	}
 }

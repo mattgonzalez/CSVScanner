@@ -1038,6 +1038,7 @@
     <ClCompile Include="..\..\Source\CSVScanner.cpp">
       <Filter>CSVScanner\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\StreamManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharacterFunctions.h">
@@ -2051,6 +2052,7 @@
     <ClInclude Include="..\..\Source\CSVScanner.h">
       <Filter>CSVScanner\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\StreamManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\JUCE\modules\juce_core\juce_module_info">

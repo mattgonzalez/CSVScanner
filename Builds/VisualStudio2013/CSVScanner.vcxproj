@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\CSVScanner.cpp" />
     <ClCompile Include="..\..\Source\Main.cpp" />
+    <ClCompile Include="..\..\Source\StreamManager.cpp" />
     <ClCompile Include="\JUCE\modules\juce_core\text\juce_CharacterFunctions.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -954,6 +955,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\CSVScanner.h" />
+    <ClInclude Include="..\..\Source\StreamManager.h" />
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharacterFunctions.h" />
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharPointer_ASCII.h" />
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharPointer_UTF8.h" />

@@ -1,4 +1,5 @@
 #pragma once
+#include "StreamManager.h"
 
 class CSVScanner : public ThreadWithProgressWindow
 {
@@ -15,6 +16,7 @@ protected:
 	Result result;
 	FileInputStream csvInputStream;
 	MemoryBlock csvMemoryBlock;
+	StreamManager streamManager;
 
 	void parseLine(String const &line, StringArray &tokens);
 	void handleASIOHostNotify(StringArray & tokens);
@@ -28,5 +30,12 @@ protected:
 	{
 		MEGA_BYTE = 1024 * 1024
 	};
+
+	static const String comma;
+	static const String ASIOHostNotify;
+	static const String ASIOOutputReady;
+	static const String AVTPTransmit;
+
+	JUCE_LEAK_DETECTOR(CSVScanner);
 };
 
