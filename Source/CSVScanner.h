@@ -15,7 +15,6 @@ protected:
 	File logFile;
 	Result result;
 	FileInputStream csvInputStream;
-	MemoryBlock csvMemoryBlock;
 	StreamManager streamManager;
 
 	void parseLine(String const &line, StringArray &tokens);
@@ -35,6 +34,7 @@ protected:
 	static const String ASIOHostNotify;
 	static const String ASIOOutputReady;
 	static const String AVTPTransmit;
+	static const String AVTPReceive;
 
 	JUCE_LEAK_DETECTOR(CSVScanner);
 };

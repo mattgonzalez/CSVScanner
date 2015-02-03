@@ -5,6 +5,8 @@ const String CSVScanner::comma(",");
 const String CSVScanner::ASIOHostNotify("ASIO host notify");
 const String CSVScanner::ASIOOutputReady("ASIO output ready");
 const String CSVScanner::AVTPTransmit("AVTP transmit");
+const String CSVScanner::AVTPReceive("AVTP receive");
+
 
 CSVScanner::CSVScanner(String filename) :
 result(Result::ok()),
@@ -13,7 +15,6 @@ maxElapsedHostNotifySeconds(0.0),
 maxCallbackSeconds(0.0),
 csvFile(File::getCurrentWorkingDirectory().getChildFile(filename)),
 csvInputStream(File::getCurrentWorkingDirectory().getChildFile(filename)),
-csvMemoryBlock(),
 ThreadWithProgressWindow("CSV Scanner",true,true)
 {
 	
@@ -21,7 +22,8 @@ ThreadWithProgressWindow("CSV Scanner",true,true)
 
 Result CSVScanner::scan()
 {
-	logFile = File::getCurrentWorkingDirectory().getFullPathName() + "\\log.txt";
+	File outputFolder(File::getCurrentWorkingDirectory());
+	logFile = File(outputFolder.getChildFile(csvFile.getFileNameWithoutExtension() + ".out.txt"));
 
 	if (false == csvInputStream.openedOk())
 	{
@@ -49,32 +51,25 @@ void CSVScanner::run()
 {
 	int64 bytes = csvFile.getSize();
 	int64 remaining = bytes;
-	
+	BufferedInputStream bufferedCSVInputStream(csvInputStream, 512 * MEGA_BYTE);
+
 	String line;
 	StringArray tokens;
 
-	while (false == csvInputStream.isExhausted())
+	while (false == bufferedCSVInputStream.isExhausted())
 	{
-		csvMemoryBlock.reset();
-		csvInputStream.readIntoMemoryBlock(csvMemoryBlock, MEGA_BYTE);
-		MemoryInputStream inputStream(csvMemoryBlock, false);
-	
-		while (false == inputStream.isExhausted())
+		if (threadShouldExit())
 		{
-			if (threadShouldExit())
-			{
-				result = Result::fail("User canceled");
-				return;
-			}
-
-			line = inputStream.readNextLine();
-
-			parseLine(line, tokens);
-
-			remaining -= line.getNumBytesAsUTF8();
-			int64 progress = bytes - remaining;
-			setProgress(double(progress) / bytes);
+			result = Result::fail("User canceled");
+			return;
 		}
+
+		line = bufferedCSVInputStream.readNextLine();
+		parseLine(line, tokens);
+
+		remaining -= line.getNumBytesAsUTF8();
+		int64 progress = bytes - remaining;
+		setProgress(double(progress) / bytes);
 	}
 }
 
@@ -110,9 +105,17 @@ void CSVScanner::parseLine(String const &line, StringArray &tokens)
 		return;
 	}
 
+#if 0
 	if (AVTPTransmit == tokens[3])
 	{
-		//streamManager.handleAVTPTransmit(tokens, logFile);
+		streamManager.handleAVTPTransmit(tokens, logFile);
+		return;
+	}
+#endif
+
+	if (AVTPReceive == tokens[3])
+	{
+		streamManager.handleAVTPReceive(tokens, logFile);
 		return;
 	}
 }
