@@ -15,12 +15,13 @@ public:
 
 		int64 streamID;
 		bool previousOK;
-// 		double previousEventSeconds;
+ 		double previousEventSeconds;
 // 		int8 previousSequenceNum;
 // 		uint64 previousPresentationTime;
 		uint64 previousReferenceTime;
 
 		int64 maxReferenceInterval;
+		double maxEventInterval;
 	};
 
 	Array<Stream> talkerStreams;

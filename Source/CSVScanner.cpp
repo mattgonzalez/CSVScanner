@@ -51,7 +51,11 @@ void CSVScanner::run()
 {
 	int64 bytes = csvFile.getSize();
 	int64 remaining = bytes;
+#ifdef _WIN64
+	BufferedInputStream bufferedCSVInputStream(csvInputStream, 1024 * MEGA_BYTE);
+#else
 	BufferedInputStream bufferedCSVInputStream(csvInputStream, 512 * MEGA_BYTE);
+#endif
 
 	String line;
 	StringArray tokens;
@@ -105,7 +109,7 @@ void CSVScanner::parseLine(String const &line, StringArray &tokens)
 		return;
 	}
 
-#if 0
+#if 1
 	if (AVTPTransmit == tokens[3])
 	{
 		streamManager.handleAVTPTransmit(tokens, logFile);

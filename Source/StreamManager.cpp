@@ -17,9 +17,11 @@ void StreamManager::handleAVTPTransmit(StringArray & tokens, File &logFile)
 	Stream& stream(findTalkerStream(streamID));
 
 	uint64 egress = tokens[7].getLastCharacters(17).getHexValue64();
+	double eventSeconds = tokens[1].getDoubleValue();
 	if (stream.previousOK)
 	{
 		int64 egressInterval = egress - stream.previousReferenceTime;
+		double eventInterval = eventSeconds - stream.previousEventSeconds;
 		
 		if (egressInterval < 0)
 		{
@@ -37,9 +39,20 @@ void StreamManager::handleAVTPTransmit(StringArray & tokens, File &logFile)
 
 			stream.maxReferenceInterval = egressInterval;
 		}
+
+		if (eventInterval > stream.maxEventInterval)
+		{
+			int eventIndex = tokens[0].getIntValue();
+			String line("New max event interval ");
+			line += String(eventInterval) + " for streamID " + String::toHexString(stream.streamID) + ", event " + String(eventIndex) + newLine + newLine;
+			logFile.appendText(line);
+
+			stream.maxEventInterval = eventInterval;
+		}
 	}
 
 	stream.previousReferenceTime = egress;
+	stream.previousEventSeconds = eventSeconds;
 	stream.previousOK = true;
 }
 
@@ -110,5 +123,6 @@ void StreamManager::handleAVTPReceive(StringArray & tokens, File logFile)
 StreamManager::Stream::Stream()
 {
 	maxReferenceInterval = 0;
+	maxEventInterval = 0.0;
 	previousOK = false;
 }
