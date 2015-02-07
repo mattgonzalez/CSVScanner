@@ -1,0 +1,35 @@
+0,0.000000,0,PTP transmit delay request,sequenceID:335,
+1,0.000839,0,PTP receive sync,Ingress:0xf1f2.802448d8,sequenceID:41473,
+2,0.001032,0,PTP receive follow up,Ingress:0xf1f2.9dee4090,Seconds:98648,Nanoseconds:759706784,sequenceID:41473
+3,0.001036,0,PTP receive delay response,sequenceID:335,
+4,0.001190,0,PTP receive delay follow-up,sequenceID:335,
+5,0.500666,500,PTP receive sync,Ingress:0xf1f2.9deb8990,sequenceID:41474,
+6,0.500823,500,PTP receive follow up,Ingress:0xf1f2.bbb8d038,Seconds:98649,Nanoseconds:259521824,sequenceID:41474
+7,1.000042,0,PTP transmit delay request,sequenceID:336,
+8,1.000621,500,PTP receive sync,Ingress:0xf1f2.bbb621f8,sequenceID:41475,
+9,1.000776,500,PTP receive follow up,Ingress:0xf1f2.d9857ef8,Seconds:98649,Nanoseconds:759483424,sequenceID:41475
+10,1.000795,1000,PTP receive delay response,sequenceID:336,
+11,1.000941,1000,PTP receive delay follow-up,sequenceID:336,
+12,1.500639,500,PTP receive sync,Ingress:0xf1f2.d982f6d8,sequenceID:41476,
+13,1.500800,500,PTP receive follow up,Ingress:0xf1f2.f7535910,Seconds:98650,Nanoseconds:259501024,sequenceID:41476
+14,2.000094,1000,PTP transmit delay request,sequenceID:337,
+15,2.000565,500,PTP receive sync,Ingress:0xf1f2.f750a670,sequenceID:41477,
+16,2.000688,500,PTP receive follow up,Ingress:0xf1f3.151f1d68,Seconds:98650,Nanoseconds:759432064,sequenceID:41477
+17,2.001248,1000,PTP receive delay response,sequenceID:337,
+18,2.001408,1000,PTP receive delay follow-up,sequenceID:337,
+19,2.500595,500,PTP receive sync,Ingress:0xf1f3.151d03e8,sequenceID:41478,
+20,2.500761,500,PTP receive follow up,Ingress:0xf1f3.32edd418,Seconds:98651,Nanoseconds:259479104,sequenceID:41478
+21,3.000130,1000,PTP transmit delay request,sequenceID:338,
+22,3.000565,999,PTP receive delay response,sequenceID:338,
+23,3.000742,999,PTP receive delay follow-up,sequenceID:338,
+24,3.000743,500,PTP receive sync,Ingress:0xf1f3.32eb2678,sequenceID:41479,
+25,3.000900,500,PTP receive follow up,Ingress:0xf1f3.50bd81b8,Seconds:98651,Nanoseconds:759648224,sequenceID:41479
+26,3.500537,500,PTP receive sync,Ingress:0xf1f3.50bb25f8,sequenceID:41480,
+27,3.500690,500,PTP receive follow up,Ingress:0xf1f3.6e87cfa8,Seconds:98652,Nanoseconds:259427584,sequenceID:41480
+28,4.000175,1000,PTP transmit delay request,sequenceID:339,
+29,4.000543,500,PTP receive sync,Ingress:0xf1f3.6e8532e8,sequenceID:41481,
+30,4.000717,500,PTP receive follow up,Ingress:0xf1f3.8c559de8,Seconds:98652,Nanoseconds:759443104,sequenceID:41481
+31,4.000837,1000,PTP receive delay response,sequenceID:339,
+32,4.001006,1000,PTP receive delay follow-up,sequenceID:339,
+33,4.500525,500,PTP receive sync,Ingress:0xf1f3.8c52da68,sequenceID:41482,
+34,4.500683,500,PTP receive follow up,Ingress:0xf1f3.aa22be68,Seconds:98653,Nanoseconds:259434784,sequenceID:41482

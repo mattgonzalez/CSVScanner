@@ -20,7 +20,7 @@ protected:
 	void parseLine(String const &line, StringArray &tokens);
 	void handleASIOHostNotify(StringArray & tokens);
 	void handleASIOOutputReady(StringArray & tokens);
-
+	void decompressToCSV();
 	double hostNotifySeconds;
 	double maxElapsedHostNotifySeconds;
 	double maxCallbackSeconds;

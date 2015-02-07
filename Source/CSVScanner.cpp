@@ -56,11 +56,19 @@ void CSVScanner::run()
 #else
 	BufferedInputStream bufferedCSVInputStream(csvInputStream, 512 * MEGA_BYTE);
 #endif
+	InputStream* actualInputStream(&bufferedCSVInputStream);
+	ScopedPointer<GZIPDecompressorInputStream> inputStreamZip;
+	bool compressed(csvFile.getFileExtension() == ".gzip");
+	if (compressed)
+	{
+		inputStreamZip = new GZIPDecompressorInputStream(bufferedCSVInputStream);
+		actualInputStream = inputStreamZip.get();
+	}
 
 	String line;
 	StringArray tokens;
 
-	while (false == bufferedCSVInputStream.isExhausted())
+	while (false == actualInputStream->isExhausted())
 	{
 		if (threadShouldExit())
 		{
@@ -68,12 +76,16 @@ void CSVScanner::run()
 			return;
 		}
 
-		line = bufferedCSVInputStream.readNextLine();
+		line = actualInputStream->readNextLine();
 		parseLine(line, tokens);
 
 		remaining -= line.getNumBytesAsUTF8();
 		int64 progress = bytes - remaining;
 		setProgress(double(progress) / bytes);
+	}
+	if (compressed)
+	{
+		decompressToCSV();
 	}
 }
 
@@ -163,4 +175,23 @@ void CSVScanner::handleASIOOutputReady(StringArray & tokens)
 	}
 
 	maxCallbackSeconds = jmax(maxCallbackSeconds, callbackSeconds);
+}
+
+void CSVScanner::decompressToCSV()
+{
+	csvInputStream.setPosition(0);
+	GZIPDecompressorInputStream decompressorStream(csvInputStream);
+	File folder(csvInputStream.getFile().getParentDirectory());
+	String filename(csvInputStream.getFile().getFileNameWithoutExtension());
+	File decompressedFile(folder.getChildFile(filename).withFileExtension(".csv"));
+	
+	if (decompressedFile.existsAsFile())
+	{
+		decompressedFile.deleteFile();
+	}
+	decompressedFile.create();
+
+	FileOutputStream decompressedOutputStream(decompressedFile);
+
+	decompressedOutputStream.writeFromInputStream(decompressorStream, -1);
 }
