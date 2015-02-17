@@ -10,6 +10,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "CSVScanner.h"
+#include "CSVDecompressor.h"
 
 
 //==============================================================================
@@ -26,12 +27,27 @@ public:
     //==============================================================================
     void initialise (const String& commandLine) override
     {
+#if SCANNER
 		CSVScanner scanner(commandLine);
 		Result result(scanner.scan());
 		if (result.failed())
 		{
 			AlertWindow::showNativeDialogBox("Scanner", result.getErrorMessage(), false);
 		}
+#endif
+
+#if DECOMPRESS
+		CSVDecompressor decompressor;
+		Result result(decompressor.decompress());
+		if (result.failed() && result.getErrorMessage().isNotEmpty())
+		{
+			AlertWindow::showNativeDialogBox("CSV Decompressor", result.getErrorMessage(), false);
+		}
+		else
+		{
+			AlertWindow::showNativeDialogBox("CSV Decompressor", "Created " + decompressor.decompressedFile.getFullPathName(), false);
+		}
+#endif
 
 		quit();
     }

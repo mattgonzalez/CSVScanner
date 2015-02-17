@@ -8,23 +8,32 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
+		DebugDecompress|Win32 = DebugDecompress|Win32
+		DebugDecompress|x64 = DebugDecompress|x64
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
+		ReleaseDecompress|Win32 = ReleaseDecompress|Win32
+		ReleaseDecompress|x64 = ReleaseDecompress|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.Debug|Win32.ActiveCfg = Debug|Win32
 		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.Debug|Win32.Build.0 = Debug|Win32
 		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.Debug|x64.ActiveCfg = Debug|x64
 		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.Debug|x64.Build.0 = Debug|x64
+		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.DebugDecompress|Win32.ActiveCfg = DebugDecompress|Win32
+		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.DebugDecompress|Win32.Build.0 = DebugDecompress|Win32
+		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.DebugDecompress|x64.ActiveCfg = DebugDecompress|x64
+		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.DebugDecompress|x64.Build.0 = DebugDecompress|x64
 		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.Release|Win32.ActiveCfg = Release|Win32
 		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.Release|Win32.Build.0 = Release|Win32
 		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.Release|x64.ActiveCfg = Release|x64
 		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.Release|x64.Build.0 = Release|x64
+		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.ReleaseDecompress|Win32.ActiveCfg = ReleaseDecompress|Win32
+		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.ReleaseDecompress|Win32.Build.0 = ReleaseDecompress|Win32
+		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.ReleaseDecompress|x64.ActiveCfg = ReleaseDecompress|x64
+		{64E6A082-F320-FE5B-98FD-B2BEC1C510A8}.ReleaseDecompress|x64.Build.0 = ReleaseDecompress|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

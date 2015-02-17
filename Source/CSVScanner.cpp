@@ -68,6 +68,7 @@ void CSVScanner::run()
 	String line;
 	StringArray tokens;
 
+#if 0
 	while (false == actualInputStream->isExhausted())
 	{
 		if (threadShouldExit())
@@ -83,6 +84,7 @@ void CSVScanner::run()
 		int64 progress = bytes - remaining;
 		setProgress(double(progress) / bytes);
 	}
+#endif
 	if (compressed)
 	{
 		decompressToCSV();
