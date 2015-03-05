@@ -1038,7 +1038,13 @@
     <ClCompile Include="..\..\Source\CSVScanner.cpp">
       <Filter>CSVScanner\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\StreamManager.cpp" />
+    <ClCompile Include="..\..\Source\StreamManager.cpp">
+      <Filter>CSVScanner\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BinaryScanner.cpp">
+      <Filter>CSVScanner\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ValueTreeTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharacterFunctions.h">
@@ -2052,7 +2058,20 @@
     <ClInclude Include="..\..\Source\CSVScanner.h">
       <Filter>CSVScanner\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\StreamManager.h" />
+    <ClInclude Include="..\..\Source\base.h" />
+    <ClInclude Include="..\..\Source\StreamManager.h">
+      <Filter>CSVScanner\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BinaryScanner.h">
+      <Filter>CSVScanner\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EventLog.h">
+      <Filter>CSVScanner\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EventList.h">
+      <Filter>CSVScanner\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ValueTreeTest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\JUCE\modules\juce_core\juce_module_info">

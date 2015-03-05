@@ -8,8 +8,10 @@
   ==============================================================================
 */
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "base.h"
 #include "CSVScanner.h"
+#include "BinaryScanner.h"
+#include "ValueTreeTest.h"
 
 
 //==============================================================================
@@ -24,14 +26,50 @@ public:
     bool moreThanOneInstanceAllowed() override       { return true; }
 
     //==============================================================================
-    void initialise (const String& commandLine) override
+    void initialise (const String& /*commandLine*/) override
     {
+#if CSV
 		CSVScanner scanner(commandLine);
 		Result result(scanner.scan());
 		if (result.failed())
 		{
 			AlertWindow::showNativeDialogBox("Scanner", result.getErrorMessage(), false);
 		}
+#endif
+
+
+#if BINARY
+		BinaryScanner scanner(commandLine);
+		Result result(scanner.scan());
+		if (result.failed())
+		{
+			AlertWindow::showNativeDialogBox("Scanner", result.getErrorMessage(), false);
+		}
+#endif
+
+#if VALUE_TREE_TEST
+		ValueTreeTest test1("Test1");
+		ValueTreeTest test2("Test1");
+
+		test1.tree.addListener(&test2);
+
+		DynamicObject* object = new DynamicObject;
+		Identifier foo("Foo");
+		Identifier fooObject("FooObject");
+		object->setProperty(foo, 1234);
+		test1.tree.setProperty(fooObject, object, nullptr);
+
+		object->setProperty(foo, 5678);
+		DynamicObject* object2 = test1.tree.getProperty(fooObject).getDynamicObject();
+		if (object2)
+		{
+			int i = object2->getProperty(foo);
+			object2->setProperty(foo, 1111);
+			test1.tree.sendPropertyChangeMessage(fooObject);
+		}
+
+		AlertWindow::showNativeDialogBox("Scanner", "Hi!", false);
+#endif
 
 		quit();
     }

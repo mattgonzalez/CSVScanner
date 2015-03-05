@@ -237,9 +237,11 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\BinaryScanner.cpp" />
     <ClCompile Include="..\..\Source\CSVScanner.cpp" />
     <ClCompile Include="..\..\Source\Main.cpp" />
     <ClCompile Include="..\..\Source\StreamManager.cpp" />
+    <ClCompile Include="..\..\Source\ValueTreeTest.cpp" />
     <ClCompile Include="\JUCE\modules\juce_core\text\juce_CharacterFunctions.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1061,8 +1063,13 @@
     <ClCompile Include="..\..\..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\base.h" />
+    <ClInclude Include="..\..\Source\BinaryScanner.h" />
     <ClInclude Include="..\..\Source\CSVScanner.h" />
+    <ClInclude Include="..\..\Source\EventList.h" />
+    <ClInclude Include="..\..\Source\EventLog.h" />
     <ClInclude Include="..\..\Source\StreamManager.h" />
+    <ClInclude Include="..\..\Source\ValueTreeTest.h" />
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharacterFunctions.h" />
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharPointer_ASCII.h" />
     <ClInclude Include="\JUCE\modules\juce_core\text\juce_CharPointer_UTF8.h" />

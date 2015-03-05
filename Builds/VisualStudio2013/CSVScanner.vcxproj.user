@@ -6,7 +6,7 @@
     <LocalDebuggerWorkingDirectory>d:\big</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>c:\big\talker_short.csv</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>c:\big\StreamwareLog</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>c:\big</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
@@ -15,7 +15,8 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>d:\big\tiny.csv</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>c:\big\StreamwareLog</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerWorkingDirectory>c:\big</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
 </Project>

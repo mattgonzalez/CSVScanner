@@ -1,4 +1,4 @@
-#include "JuceHeader.h"
+#include "base.h"
 #include "StreamManager.h"
 
 StreamManager::StreamManager()

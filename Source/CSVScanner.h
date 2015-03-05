@@ -20,6 +20,8 @@ protected:
 	void parseLine(String const &line, StringArray &tokens);
 	void handleASIOHostNotify(StringArray & tokens);
 	void handleASIOOutputReady(StringArray & tokens);
+	void handleASIOThreadEnter(StringArray & tokens);
+	void handleASIOThreadResync(StringArray & tokens);
 
 	double hostNotifySeconds;
 	double maxElapsedHostNotifySeconds;
@@ -33,9 +35,14 @@ protected:
 	static const String comma;
 	static const String ASIOHostNotify;
 	static const String ASIOOutputReady;
+	static const String ASIOThreadResync;
+	static const String ASIOThreadEnter;
+	static const String ASIOThreadExit;
 	static const String AVTPTransmit;
 	static const String AVTPReceive;
 
+
 	JUCE_LEAK_DETECTOR(CSVScanner);
+
 };
 

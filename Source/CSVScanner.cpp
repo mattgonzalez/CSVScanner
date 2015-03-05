@@ -1,9 +1,12 @@
-#include "JuceHeader.h"
+#include "base.h"
 #include "CSVScanner.h"
 
 const String CSVScanner::comma(",");
 const String CSVScanner::ASIOHostNotify("ASIO host notify");
 const String CSVScanner::ASIOOutputReady("ASIO output ready");
+const String CSVScanner::ASIOThreadResync("ASIO thread resync");
+const String CSVScanner::ASIOThreadEnter("ASIO thread enter");
+const String CSVScanner::ASIOThreadExit("ASIO thread exit");
 const String CSVScanner::AVTPTransmit("AVTP transmit");
 const String CSVScanner::AVTPReceive("AVTP receive");
 
@@ -14,7 +17,7 @@ hostNotifySeconds(0.0),
 maxElapsedHostNotifySeconds(0.0),
 maxCallbackSeconds(0.0),
 csvFile(File::getCurrentWorkingDirectory().getChildFile(filename)),
-csvInputStream(File::getCurrentWorkingDirectory().getChildFile(filename)),
+csvInputStream(csvFile),
 ThreadWithProgressWindow("CSV Scanner",true,true)
 {
 	
@@ -35,9 +38,6 @@ Result CSVScanner::scan()
 		logFile.deleteFile();
 		logFile.create();
 	}
-
-	if (false == csvFile.exists())
-		return Result::fail(csvFile.getFullPathName() + " does not exist");
 
 	if (runThread())
 	{
@@ -109,6 +109,18 @@ void CSVScanner::parseLine(String const &line, StringArray &tokens)
 		return;
 	}
 
+	if (ASIOThreadEnter == tokens[3])
+	{
+		handleASIOThreadEnter(tokens);
+		return;
+	}
+
+	if (ASIOThreadResync == tokens[3])
+	{
+		handleASIOThreadResync(tokens);
+		return;
+	}
+
 #if 1
 	if (AVTPTransmit == tokens[3])
 	{
@@ -163,4 +175,22 @@ void CSVScanner::handleASIOOutputReady(StringArray & tokens)
 	}
 
 	maxCallbackSeconds = jmax(maxCallbackSeconds, callbackSeconds);
+}
+
+void CSVScanner::handleASIOThreadEnter(StringArray & tokens)
+{
+	int eventIndex = tokens[0].getIntValue();
+	String logString("ASIO driver start at event index ");
+	logFile.appendText(logString + String(eventIndex));
+
+	hostNotifySeconds = 0.0;
+	maxElapsedHostNotifySeconds = 0.0;
+	maxCallbackSeconds = 0.0;
+}
+
+void CSVScanner::handleASIOThreadResync(StringArray & tokens)
+{
+	int eventIndex = tokens[0].getIntValue();
+	String logString("ASIO resync at event index ");
+	logFile.appendText(logString + String(eventIndex));
 }
