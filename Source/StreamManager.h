@@ -16,7 +16,7 @@ public:
 		int64 streamID;
 		bool previousOK;
  		double previousEventSeconds;
-// 		int8 previousSequenceNum;
+		uint8 previousSequenceNum;
 // 		uint64 previousPresentationTime;
 		uint64 previousReferenceTime;
 

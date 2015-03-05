@@ -1,39 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>d:\big\listener_short.csv</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\temp\FailureLog\FailureLog.csv</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>d:\big</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDecompress|Win32'">
-    <LocalDebuggerCommandArguments>d:\big\listener_short.csv</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\temp\FailureLog\FailureLog.csv</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>d:\big</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>squishy.gzip</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\temp\FailureLog\FailureLog.csv</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDecompress|x64'">
-    <LocalDebuggerCommandArguments>squishy.gzip</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\temp\FailureLog\FailureLog.csv</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments>d:\big\tiny.csv</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\temp\FailureLog\FailureLog.csv</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDecompress|Win32'">
-    <LocalDebuggerCommandArguments>d:\big\tiny.csv</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\temp\FailureLog\FailureLog.csv</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>squishy.gzip</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\temp\FailureLog\FailureLog.csv</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDecompress|x64'">
-    <LocalDebuggerCommandArguments>squishy.gzip</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\temp\FailureLog\FailureLog.csv</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

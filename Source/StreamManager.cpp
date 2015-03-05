@@ -18,10 +18,12 @@ void StreamManager::handleAVTPTransmit(StringArray & tokens, File &logFile)
 
 	uint64 egress = tokens[7].getLastCharacters(17).getHexValue64();
 	double eventSeconds = tokens[1].getDoubleValue();
+	uint8 sequenceNum = (uint8)tokens[5].getTrailingIntValue();
 	if (stream.previousOK)
 	{
 		int64 egressInterval = egress - stream.previousReferenceTime;
 		double eventInterval = eventSeconds - stream.previousEventSeconds;
+		uint8 sequenceInterval = sequenceNum - stream.previousSequenceNum;
 		
 		if (egressInterval < 0)
 		{
@@ -49,8 +51,17 @@ void StreamManager::handleAVTPTransmit(StringArray & tokens, File &logFile)
 
 			stream.maxEventInterval = eventInterval;
 		}
+
+		if (sequenceInterval != 1)
+		{
+			int eventIndex = tokens[0].getIntValue();
+			String line("Bad sequence at event " + String(eventIndex) + newLine + newLine);
+
+			logFile.appendText(line);
+		}
 	}
 
+	stream.previousSequenceNum = sequenceNum;
 	stream.previousReferenceTime = egress;
 	stream.previousEventSeconds = eventSeconds;
 	stream.previousOK = true;

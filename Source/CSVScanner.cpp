@@ -12,6 +12,7 @@ CSVScanner::CSVScanner(String filename) :
 result(Result::ok()),
 hostNotifySeconds(0.0),
 maxElapsedHostNotifySeconds(0.0),
+maxElapsedOutputReadySeconds(0.0),
 maxCallbackSeconds(0.0),
 csvFile(File::getCurrentWorkingDirectory().getChildFile(filename)),
 csvInputStream(File::getCurrentWorkingDirectory().getChildFile(filename)),
@@ -22,7 +23,7 @@ ThreadWithProgressWindow("CSV Scanner",true,true)
 
 Result CSVScanner::scan()
 {
-	File outputFolder(File::getCurrentWorkingDirectory());
+	File outputFolder(csvFile.getParentDirectory());
 	logFile = File(outputFolder.getChildFile(csvFile.getFileNameWithoutExtension() + ".out.txt"));
 
 	if (false == csvInputStream.openedOk())
@@ -68,7 +69,7 @@ void CSVScanner::run()
 	String line;
 	StringArray tokens;
 
-#if 0
+#if 1
 	while (false == actualInputStream->isExhausted())
 	{
 		if (threadShouldExit())
@@ -85,10 +86,10 @@ void CSVScanner::run()
 		setProgress(double(progress) / bytes);
 	}
 #endif
-	if (compressed)
-	{
-		decompressToCSV();
-	}
+// 	if (compressed)
+// 	{
+// 		decompressToCSV();
+// 	}
 }
 
 void CSVScanner::parseLine(String const &line, StringArray &tokens)
@@ -111,6 +112,7 @@ void CSVScanner::parseLine(String const &line, StringArray &tokens)
 	}
 	tokens.add(line.substring(tokenStart, tokenEnd));
 
+#if 0
 	if (ASIOHostNotify == tokens[3])
 	{
 		handleASIOHostNotify(tokens);
@@ -122,6 +124,8 @@ void CSVScanner::parseLine(String const &line, StringArray &tokens)
 		handleASIOOutputReady(tokens);
 		return;
 	}
+#endif
+
 
 #if 1
 	if (AVTPTransmit == tokens[3])
@@ -131,27 +135,29 @@ void CSVScanner::parseLine(String const &line, StringArray &tokens)
 	}
 #endif
 
+#if 0
 	if (AVTPReceive == tokens[3])
 	{
 		streamManager.handleAVTPReceive(tokens, logFile);
 		return;
 	}
+#endif
 }
 
 void CSVScanner::handleASIOHostNotify(StringArray & tokens)
 {
-	double seconds = tokens[1].getDoubleValue();
-	double elapsedSeconds = 0.0;
-	if (hostNotifySeconds != 0.0)
-	{
-		elapsedSeconds = seconds - hostNotifySeconds;
-	}
-	hostNotifySeconds = seconds;
+	//double seconds = tokens[1].getDoubleValue();
+	double elapsedSeconds = tokens[2].getDoubleValue();
+// 	if (hostNotifySeconds != 0.0)
+// 	{
+// 		elapsedSeconds = seconds - hostNotifySeconds;
+// 	}
+// 	hostNotifySeconds = seconds;
 
 	if (elapsedSeconds > maxElapsedHostNotifySeconds)
 	{
-		String logString("an ASIO Host Notify event has set a new maxElapsedHostNotifySeconds entry: " + String(elapsedSeconds) + " seconds. \n");
-		logString += "The previous maxElapsedHostNotifySeconds was: " + String(maxElapsedHostNotifySeconds) + " seconds. \n";
+		String logString("an ASIO Host Notify event has set a new maxElapsedHostNotifySeconds entry: " + String(elapsedSeconds) + " msec. \n");
+		logString += "The previous maxElapsedHostNotifySeconds was: " + String(maxElapsedHostNotifySeconds) + " msec. \n";
 		logString += "This happened on eventIndex: " + tokens[0] + ". \n\n";
 		logFile.appendText(logString);
 
@@ -161,19 +167,22 @@ void CSVScanner::handleASIOHostNotify(StringArray & tokens)
 
 void CSVScanner::handleASIOOutputReady(StringArray & tokens)
 {
-	double seconds = tokens[1].getDoubleValue();
+	//double seconds = tokens[1].getDoubleValue();
 	double callbackSeconds = 0.0;
-	if (hostNotifySeconds != 0.0)
-	{
-		callbackSeconds = seconds - hostNotifySeconds;
-	}
+	double elapsedSeconds = tokens[2].getDoubleValue();
+// 	if (hostNotifySeconds != 0.0)
+// 	{
+// 		callbackSeconds = seconds - hostNotifySeconds;
+// 	}
 
-	if (callbackSeconds > maxCallbackSeconds)
+	if (elapsedSeconds > maxElapsedOutputReadySeconds)
 	{
-		String logString("an ASIO Output Ready event has set a new maxCallbackSeconds entry: " + String(callbackSeconds) + " seconds. \n");
-		logString += "The previous maxCallbackSeconds was: " + String(maxCallbackSeconds) + " seconds. \n";
+		String logString("an ASIO Output Ready event has set a new maxElapsedOutputReadySeconds entry: " + String(elapsedSeconds) + " msec. \n");
+		logString += "The previous maxElapsedOutputReadySeconds was: " + String(maxElapsedOutputReadySeconds) + " msec. \n";
 		logString += "This happened on eventIndex: " + tokens[0] + ". \n\n";
 		logFile.appendText(logString);
+
+		maxElapsedOutputReadySeconds = elapsedSeconds;
 	}
 
 	maxCallbackSeconds = jmax(maxCallbackSeconds, callbackSeconds);
@@ -197,3 +206,12 @@ void CSVScanner::decompressToCSV()
 
 	decompressedOutputStream.writeFromInputStream(decompressorStream, -1);
 }
+
+#if 0
+Time CSVScanner::getEventTime(String &timeString)
+{
+	int hour = timeString.substring(8, 10).getIntValue();
+	int minute = timeString.substring(11, 13).getIntValue();
+	int msec = timeString.substring(14, 17).getIntValue();
+}
+#endif

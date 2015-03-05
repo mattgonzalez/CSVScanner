@@ -27,7 +27,7 @@ public:
     //==============================================================================
     void initialise (const String& commandLine) override
     {
-#if SCANNER
+#if 1
 		CSVScanner scanner(commandLine);
 		Result result(scanner.scan());
 		if (result.failed())

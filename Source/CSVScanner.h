@@ -21,8 +21,12 @@ protected:
 	void handleASIOHostNotify(StringArray & tokens);
 	void handleASIOOutputReady(StringArray & tokens);
 	void decompressToCSV();
+
+	//Time getEventTime(String &timeString);
+
 	double hostNotifySeconds;
 	double maxElapsedHostNotifySeconds;
+	double maxElapsedOutputReadySeconds;
 	double maxCallbackSeconds;
 
 	enum 
